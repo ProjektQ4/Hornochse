@@ -1,7 +1,7 @@
 G = (V, ∑, P, S) mit
-V =  {<Befehl>, <Setup>, <Ausgewählt>, <Legen>, <eigene Karte legen>, <fremde Karte legen>, <Zusortieren>, <Bewegen>, <Warten>, <neue Runde>, <Spieleranzahl>, <Kartenanzahl>, <Stapelanzahl>, <Kartenzahl>, <Spieler>, <Stapel>, <verbundene Spieler>}
+V =  {<Befehl>, <Setup>, <Ausgewählt>, <Legen>, <eigene Karte legen>, <fremde Karte legen>, <Zusortieren>, <Bewegen>, <Warten>, <neue Runde>, <Spielende>, <Spieleranzahl>, <Kartenanzahl>, <Stapelanzahl>, <Kartenzahl>, <Spieler>, <Stapel>, <verbundene Spieler>}
 ∑ = {‘setup‘ , ‘ausgewählt‘ , ‘lege eigene‘ , ‘lege fremde‘ , ‘sortieren‘ , ‘warten‘ , ‘new‘ , ‘\n‘ , ‘1‘ , ‘2‘ , … , ‘100‘ , ‘,‘ , ‘;‘}
-P =  {<Befehl> -> (<Setup> | <Ausgewählt> | <Legen> | <Zuordnen> | <Warten> | <neue Runde>) ‘\n‘
+P =  {<Befehl> -> (<Setup> | <Ausgewählt> | <Legen> | <Zuordnen> | <Warten> | <neue Runde> | <Spielende>) ‘\n‘
 <Setup> -> ‘setup‘ <Spieleranzahl> ‘,‘ <Kartenanzahl> ‘,‘ Stapelanzahl>
 <Ausgewählt> -> ‘ausgewählt‘ <Kartenzahl>
 <Legen> -> <eigene Karte legen> | <fremde Karte legen>
@@ -12,12 +12,16 @@ P =  {<Befehl> -> (<Setup> | <Ausgewählt> | <Legen> | <Zuordnen> | <Warten> | <
 <Warten> -> ‘warten‘ <verbundene Spieler> ‘,‘ <Spieleranzahl>
 <neue Runde> -> ‘new‘ <Stapeleigenschaften> ‘:‘ <eigene Karten>
 <Stapeleigenschaften> -> <Kartenzahl> ‘,‘ <Punkte> ‘,‘ <Kartenanzahl Stapel> [‘;‘ <Stapeleigenschaften>]
+<Spielende> -> <gewinnender Spieler> ',' <Punkte>
+<Punkte> -> <Spieler> ',' <Punktzahl> [';' <Punkte>]
 <eigene Karten> -> <Kartenzahl> [‘,‘ <eigene Karten>]
-<Spieleranzahl> -> ‘1‘ | ‘2‘ | ‘3‘ | ‘4‘
+<Punktzahl> -> *Element der ganzen Zahlen*
 <Kartenanzahl> -> ‘1‘ | ‘2‘ | … | ‘100‘
 <Kartenzahl> -> ‘1‘ | ‘2‘ | … | ‘100‘
 <Stapelanzahl> -> ‘1‘ | ‘2‘ | … | ‘100‘
 <Stapel> -> ‘1‘ | ‘2‘ | … | ‘100‘
+<gewinnender Spieler> -> ‘1‘ | ‘2‘ | ‘3‘ | ‘4‘
+<Spieleranzahl> -> ‘1‘ | ‘2‘ | ‘3‘ | ‘4‘
 <Spieler> -> ‘1‘ | ‘2‘ | ‘3‘ | ‘4‘
 <verbundene Spieler> -> ‘1‘ | ‘2‘ | ‘3‘ | ‘4‘}
 S = {<Befehl>}
