@@ -18,6 +18,14 @@ public class Input extends Thread{
     }
     
     public void run(){
-    
+        while(sh.alive){
+            try{
+                Thread.sleep(1000);
+            }catch(Exception e){System.out.println(e.getMessage());}
+            try{
+                String s=br.readLine();
+                sh.auswerten(s);
+            }catch(Exception e){System.out.println(e.getMessage());}
+        }
     }
 }
