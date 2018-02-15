@@ -11,12 +11,12 @@ public class Client extends Thread{
     }
     
     public static void verbinden(/*String ip, int port*/){
-        String ip="192.168.178.39";
+        String ip="10.16.112.4";
         int port=80;
         try{
             sh=new SocketHandler_Client(new Socket(InetAddress.getByName(ip), port));
         }catch(Exception e){System.out.println(e.getMessage());}
-        System.out.println("Verbunden!");
+        //System.out.println("Verbunden!");
     }
     
     public static void verbindungSchließen(){

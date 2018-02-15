@@ -20,8 +20,8 @@ public class Server{
     }
 
     public static void starten(int n){
-        Client c=new Client();
-        c.start();
+        //Client c=new Client();
+        //c.start();
         verbindungen=new SocketHandler_Server[n];
         System.out.println("Server wird unter der IP "+getLocalIP().toString().substring(1)+" aufgebaut.");
         try{
