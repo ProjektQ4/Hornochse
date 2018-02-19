@@ -11,6 +11,12 @@ public class Stapel_Client{
         punkte=oberste.getPunkte();
     }
     
+    public Stapel_Client(int n, Karte_Client k, int p){
+        this.n=n;
+        oberste=k;
+        punkte=p;
+    }
+    
     public void aktualisieren(int n, Karte_Client k, int p){
         this.n=n;
         oberste=k;
