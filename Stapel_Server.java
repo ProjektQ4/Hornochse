@@ -19,10 +19,24 @@ public class Stapel_Server{
             s=karten;
             karten=new ArrayList<Karte_Server>();
             karten.add(k);
+            punkte=k.getPunkte();
         }
         else{
             karten.add(k);
+            punkte+=k.getPunkte();
         }
         return s;
+    }
+    
+    public int getPunkte(){
+        return punkte;
+    }
+    
+    public int getID(){
+        return id;
+    }
+    
+    public Karte_Server getOberste(){
+        return karten.get(0);
     }
 }

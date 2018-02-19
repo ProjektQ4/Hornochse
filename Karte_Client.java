@@ -8,9 +8,9 @@ public class Karte_Client{
     private int punkte;
     private BufferedImage img;
 
-    public Karte_Client(int z, int p){
+    public Karte_Client(int z){
         zahl=z;
-        punkte=p;
+        //punkte=p;  PUNKTE AUS ZAHL HERLEITEN!!!
         try{
             img=ImageIO.read(new File("Images\\"+zahl+".png"));
         }catch(Exception e){}
