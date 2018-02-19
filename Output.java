@@ -23,4 +23,10 @@ public class Output{
             bw.flush();
         }catch(Exception e){System.out.println(e.getMessage());}
     }
+    
+    public void schließen(){
+        try{
+            bw.close();
+        }catch(Exception e){System.out.println(e.getMessage());}
+    }
 }

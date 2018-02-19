@@ -2,8 +2,6 @@ import java.net.Socket;
 
 public class SocketHandler_Server extends SocketHandler{
     
-    private int id;
-    
     public SocketHandler_Server(Socket s, int id){
         this.id=id;
         out=new Output(this, s);
@@ -12,6 +10,6 @@ public class SocketHandler_Server extends SocketHandler{
     }
     
     public void auswerten(String s){
-        Server.auswerten(s);
+        Server.auswerten(s, id);
     }
 }
