@@ -3,6 +3,7 @@ public abstract class SocketHandler{
     
     protected Input in;
     protected Output out;
+    protected int id;
     protected boolean alive=true;
     
     public void senden(String s){

@@ -20,7 +20,7 @@ public class Input extends Thread{
     public void run(){
         while(sh.alive){
             try{
-                Thread.sleep(1000);
+                Thread.sleep(500);
             }catch(Exception e){System.out.println(e.getMessage());}
             try{
                 String s=br.readLine();
