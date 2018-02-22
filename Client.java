@@ -13,14 +13,16 @@ public class Client extends Thread{
     }
 
     public static void verbinden(/*String ip, int port*/){
-        String ip="192.168.43.72";//"192.168.178.39";//10.16.112.4
+        //String ip="192.168.43.72";
+        String ip="192.168.178.39";
+        //String ip="10.16.112.4";
         int port=80;
         try{
             sh=new SocketHandler_Client(new Socket(InetAddress.getByName(ip), port));
         }catch(Exception e){System.out.println(e.getMessage());}
         System.out.println("Client verbunden!");
-        
-        ausgewählt(new Karte_Client(45));
+
+        //ausgewählt(new Karte_Client(45));
     }
 
     public static void verbindungSchließen(){
@@ -59,20 +61,22 @@ public class Client extends Thread{
             Grafik.fremdeLegen(n);
         }
         else if(s.indexOf("sortieren")==0){
-            Bewegung_Client[] bew=new Bewegung_Client[nSpieler];
+            ArrayList<Bewegung_Client> bew=new ArrayList<Bewegung_Client>();
             s=s.substring(9);
-            for(int i=0; i<nSpieler; i++){
-                String str;
-                if(i!=nSpieler-1) str=s.substring(0, s.indexOf(";"));
-                else str=s.substring(0);
-                if(i!=nSpieler-1) s=s.substring(s.indexOf(";")+1);
-                String string=str.substring(str.indexOf(",")-1, str.indexOf(","));
-                int n1=Integer.valueOf(string);
+            while(s.indexOf(";")!=-1){
+                String str=s.substring(0, s.indexOf(";"));
+                s=s.substring(s.indexOf(";")+1);
+                int n1=Integer.valueOf(str.substring(str.indexOf(",")-1, str.indexOf(",")));
                 str=str.substring(str.indexOf(",")+1);
                 int n2=Integer.valueOf(str.substring(0, str.indexOf(",")));
                 int n3=Integer.valueOf(str.substring(str.indexOf(",")+1));
-                bew[i]=new Bewegung_Client(n1, new Karte_Client(n2), n3);
+                bew.add(new Bewegung_Client(n1, new Karte_Client(n2), n3));
             }
+            int n1=Integer.valueOf(s.substring(s.indexOf(",")-1, s.indexOf(",")));
+            s=s.substring(s.indexOf(",")+1);
+            int n2=Integer.valueOf(s.substring(0, s.indexOf(",")));
+            int n3=Integer.valueOf(s.substring(s.indexOf(",")+1));
+            bew.add(new Bewegung_Client(n1, new Karte_Client(n2), n3));
             Grafik.sortieren(bew);
         }
         else if(s.indexOf("new")==0){
@@ -102,7 +106,7 @@ public class Client extends Thread{
             }
             n1=Integer.valueOf(s2);
             hk.add(new Karte_Client(n1));
-            
+
             Grafik.neueRunde(stapel, hk);
         }
     }
