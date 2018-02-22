@@ -39,4 +39,8 @@ public class Stapel_Server{
     public Karte_Server getOberste(){
         return karten.get(0);
     }
+    
+    public int getAnzahl(){
+        return karten.size();
+    }
 }
