@@ -12,7 +12,8 @@ public class Karte_Client{
         zahl=z;
         //punkte=p;  PUNKTE AUS ZAHL HERLEITEN!!!
         try{
-            img=ImageIO.read(new File("Images\\"+zahl+".png"));
+            img = ImageIO.read(getClass().getResource("/Images/"+z+".png"));
+            int i=0;
         }catch(Exception e){}
     }
     
