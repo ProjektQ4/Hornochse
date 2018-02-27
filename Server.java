@@ -60,9 +60,9 @@ public class Server{
         Spielsteuerung.ausgewählt(zahl, id);
     }
     
-    public static void setup(int nSpieler, int nStapel, int nHandkarten){
+    public static void setup(int nSpieler, int nStapel){
         for(int i=0; i<n; i++){
-            verbindungen[i].senden("setup"+nSpieler+","+nStapel+","+nHandkarten+"\n");
+            verbindungen[i].senden("setup"+nSpieler+","+nStapel+","+i+"\n");
         }
     }
     
