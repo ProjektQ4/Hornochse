@@ -2,7 +2,7 @@ G = (V, ∑, P, S) mit
 V =  {<Befehl>, <Setup>, <Ausgewählt>, <Legen>, <eigene Karte legen>, <fremde Karte legen>, <Zusortieren>, <Bewegen>, <Warten>, <neue Runde>, <Spielende>, <Spieleranzahl>, <Kartenanzahl>, <Stapelanzahl>, <Kartenzahl>, <Spieler>, <Stapel>, <verbundene Spieler>}
 ∑ = {‘setup‘ , ‘ausgewählt‘ , ‘lege eigene‘ , ‘lege fremde‘ , ‘sortieren‘ , ‘warten‘ , ‘new‘ , ‘\n‘ , ‘1‘ , ‘2‘ , … , ‘100‘ , ‘,‘ , ‘;‘}
 P =  {<Befehl> -> (<Setup> | <Ausgewählt> | <Legen> | <Zuordnen> | <Warten> | <neue Runde> | <Spielende>) ‘\n‘
-<Setup> -> ‘setup‘ <Spieleranzahl> ‘,‘ <Kartenanzahl> ‘,‘ Stapelanzahl>
+<Setup> -> ‘setup‘ <Spieleranzahl> ‘,‘ <Stapelanzahl> ‘,‘ <eigene Spielerzahl>
 <Ausgewählt> -> ‘ausgewählt‘ <Kartenzahl>
 <Legen> -> <eigene Karte legen> | <fremde Karte legen>
 <eigene Karte legen> -> ‘lege eigene‘ <Kartenzahl>
@@ -23,5 +23,6 @@ P =  {<Befehl> -> (<Setup> | <Ausgewählt> | <Legen> | <Zuordnen> | <Warten> | <
 <gewinnender Spieler> -> ‘1‘ | ‘2‘ | ‘3‘ | ‘4‘
 <Spieleranzahl> -> ‘1‘ | ‘2‘ | ‘3‘ | ‘4‘
 <Spieler> -> ‘1‘ | ‘2‘ | ‘3‘ | ‘4‘
+<eigene Spielerzahl> -> ‘1‘ | ‘2‘ | ‘3‘ | ‘4‘
 <verbundene Spieler> -> ‘1‘ | ‘2‘ | ‘3‘ | ‘4‘}
 S = {<Befehl>}
