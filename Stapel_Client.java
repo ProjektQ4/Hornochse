@@ -22,4 +22,8 @@ public class Stapel_Client{
         oberste=k;
         punkte=p;
     }
+    
+    public Karte_Client getOberste(){
+        return oberste;
+    }
 }
