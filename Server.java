@@ -21,7 +21,7 @@ public class Server{
         return add;
     }
 
-    public static void starten(int n1){
+    public static void starteServer(int n1){
         n=n1;
         for(int i=0; i<n; i++){
             Client c=new Client();
@@ -57,12 +57,12 @@ public class Server{
     public static synchronized void auswerten(String s, int id){
         s=s.substring(10);
         int zahl=Integer.valueOf(s);
-        Spielsteuerung.ausgewählt(zahl, id);
+        Server_Start.ausgewählt(zahl, id);
     }
     
-    public static void setup(int nSpieler, int nStapel){
+    public static void setup(int nSpieler, int nStapel, int nHandkarten){
         for(int i=0; i<n; i++){
-            verbindungen[i].senden("setup"+nSpieler+","+nStapel+","+i+"\n");
+            verbindungen[i].senden("setup"+nSpieler+","+nStapel+","+nHandkarten+"\n");
         }
     }
     
