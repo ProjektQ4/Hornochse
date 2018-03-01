@@ -119,20 +119,21 @@ public class Servergui2 extends Frame {
             if(choice2.getSelectedIndex()==2) kiSchwierigkeit.add(1);
             if(choice2.getSelectedIndex()==3) kiSchwierigkeit.add(2);
         }
-        else anzahlSpieler++;
-        if(choice3.getSelectedIndex()!=1 && choice3.getSelectedIndex()!=0){
+        else anzahlSpieler++;        
+        if(choice3.getSelectedIndex()!=1){
             if(choice3.getSelectedIndex()==2) kiSchwierigkeit.add(0);
             if(choice3.getSelectedIndex()==3) kiSchwierigkeit.add(1);
             if(choice3.getSelectedIndex()==4) kiSchwierigkeit.add(2);
         }
         else anzahlSpieler++;
-        if(choice4.getSelectedIndex()!=1 && choice3.getSelectedIndex()!=0){
+        if(choice4.getSelectedIndex()!=1){
             if(choice4.getSelectedIndex()==2) kiSchwierigkeit.add(0);
             if(choice4.getSelectedIndex()==3) kiSchwierigkeit.add(1);
             if(choice4.getSelectedIndex()==4) kiSchwierigkeit.add(2);
         }
         else anzahlSpieler++;
-        Spielsteuerung.starten(anzahlSpieler, kiSchwierigkeit);
+        dispose();
+        Server_Start.starten(anzahlSpieler, kiSchwierigkeit);
     }
 
     public void choice1_ItemStateChanged(ItemEvent evt) {
@@ -141,7 +142,7 @@ public class Servergui2 extends Frame {
 
     // Ende Methoden
 
-    public static void main(String[] args) {
+    public static void main() {
         new Servergui2("Servergui2");
     }
 }
