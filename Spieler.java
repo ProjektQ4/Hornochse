@@ -11,6 +11,10 @@ public class Spieler{
         Handkarten = hk;
     }
     
+    public ArrayList<Karte_Server> getHandkarten(){
+        return Handkarten;
+    }
+    
     public void neueRunde(Stapel_Server stapel, ArrayList<Karte_Server> Handkarten){
         //Server.neueRunde();    
     }
