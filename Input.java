@@ -27,5 +27,6 @@ public class Input extends Thread{
                 sh.auswerten(s);
             }catch(Exception e){System.out.println(e.getMessage());}
         }
+        System.exit(0);
     }
 }
