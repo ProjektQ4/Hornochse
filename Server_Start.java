@@ -8,6 +8,11 @@ public class Server_Start{
     static int HandkartenProSpieler;
     static int AnzahlStapel;
 
+    static int Stapelanzahl;
+    static Spieler[] spieler;
+    static KI[] ki;
+    static Stapel_Server[] Stapel;
+
     public static ArrayList<Karte_Server> KartenGenerieren(){
         ArrayList<Karte_Server> Karten = new  ArrayList<Karte_Server>();
         for(int i = 1; i <= 98; i++){
@@ -139,54 +144,16 @@ public class Server_Start{
         Spieleranzahl = Sa;
         KIAnzahl = kiStufe.size();
         Random rnd = new Random();
+        spieler=new Spieler[Spieleranzahl];
+        ki=new KI[KIAnzahl];
 
         System.out.println(Sa+" Spieler mit "+ KIAnzahl+" KIs");
-        
+
         ArrayList<Karte_Server> Karten=KartenGenerieren();
 
-        if(Spieleranzahl+KIAnzahl == 2){
-            HandkartenProSpieler = 14;
-            AnzahlStapel = 7;
-            ArrayList<Karte_Server> hk1 = new  ArrayList<Karte_Server>();
-            ArrayList<Karte_Server> hk2 = new  ArrayList<Karte_Server>();
-            for(int i = 1; i<=14; i++){
-                int r = rnd.nextInt(Karten.size());
-                hk1.add(Karten.get(r));
-                Karten.remove(r);   
-            }
-            for(int i = 1; i<=14; i++){
-                int r = rnd.nextInt(Karten.size());
-                hk2.add(Karten.get(r));
-                Karten.remove(r);   
-            }
-            Spieler Spieler1 = new Spieler("Spieler1", 1, hk1);
-            Spieler Spieler2 = new Spieler("Spieler2", 2, hk2);
-        }
-        if(Spieleranzahl+KIAnzahl == 3){
-            HandkartenProSpieler = 12;
-            AnzahlStapel = 9;
-            ArrayList<Karte_Server> hk1 = new  ArrayList<Karte_Server>();
-            ArrayList<Karte_Server> hk2 = new  ArrayList<Karte_Server>();
-            ArrayList<Karte_Server> hk3 = new  ArrayList<Karte_Server>();
-            for(int i = 1; i<=12; i++){
-                int r = rnd.nextInt(Karten.size());
-                hk1.add(Karten.get(r));
-                Karten.remove(r);   
-            }
-            for(int i = 1; i<=12; i++){
-                int r = rnd.nextInt(Karten.size());
-                hk2.add(Karten.get(r));
-                Karten.remove(r);   
-            }
-            for(int i = 1; i<=12; i++){
-                int r = rnd.nextInt(Karten.size());
-                hk3.add(Karten.get(r));
-                Karten.remove(r);   
-            }
-            
-            
-            Spieler[] spieler=new Spieler[Spieleranzahl];
-            KI[] ki=new KI[KIAnzahl];
+        if(Spieleranzahl+KIAnzahl == 2){    
+            Stapelanzahl = 7;
+            Stapel  = new Stapel_Server[Stapelanzahl];
             for(int i=0; i<Spieleranzahl; i++){
                 ArrayList<Karte_Server> hk = new  ArrayList<Karte_Server>();
                 for(int t = 1; t<=12; t++){
@@ -197,58 +164,93 @@ public class Server_Start{
                 spieler[i]=new Spieler("Spieler"+(i+1), i+1, hk);
             }
             for(int y=0; y<KIAnzahl; y++){
-                ki[y]=new KI(1);//Platzhalter
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+                ArrayList<Karte_Server> hk = new ArrayList<Karte_Server>();
+                for(int t = 0; t<=12; t++){
+                    int r = rnd.nextInt(Karten.size());
+                    hk.add(Karten.get(r));
+                    Karten.remove(r);
+                }
+                ki[y]=new KI(kiStufe.get(y));
             }
+            for(int x=0; x<Stapelanzahl; x++){
+                int r = rnd.nextInt(Karten.size());
+                Stapel[x] = new Stapel_Server(Karten.get(r), x); 
+            }
+        }
 
-            Spieler Spieler1 = new Spieler("Spieler1", 1, hk1);
-            Spieler Spieler2 = new Spieler("Spieler2", 2, hk2);
-            Spieler Spieler3 = new Spieler("Spieler3", 3, hk3);
+        if(Spieleranzahl+KIAnzahl == 3){ 
+            Stapelanzahl = 9;
+            Stapel  = new Stapel_Server[Stapelanzahl];
+            for(int i=0; i<Spieleranzahl; i++){
+                ArrayList<Karte_Server> hk = new  ArrayList<Karte_Server>();
+                for(int t = 1; t<=12; t++){
+                    int r = rnd.nextInt(Karten.size());
+                    hk.add(Karten.get(r));
+                    Karten.remove(r);   
+                }
+                spieler[i]=new Spieler("Spieler"+(i+1), i+1, hk);
+            }
+            for(int y=0; y<KIAnzahl; y++){
+                ArrayList<Karte_Server> hk = new ArrayList<Karte_Server>();
+                for(int t = 0; t<=12; t++){
+                    int r = rnd.nextInt(Karten.size());
+                    hk.add(Karten.get(r));
+                    Karten.remove(r);
+                }
+                ki[y]=new KI(kiStufe.get(y));
+            }
+            for(int x=0; x<Stapelanzahl; x++){
+                int r = rnd.nextInt(Karten.size());
+                Stapel[x] = new Stapel_Server(Karten.get(r), x); 
+            }
         }
+
         if(Spieleranzahl+KIAnzahl == 4){
-            HandkartenProSpieler = 12;
-            AnzahlStapel = 12;
-            ArrayList<Karte_Server> hk1 = new  ArrayList<Karte_Server>();
-            ArrayList<Karte_Server> hk2 = new  ArrayList<Karte_Server>();
-            ArrayList<Karte_Server> hk3 = new  ArrayList<Karte_Server>();
-            ArrayList<Karte_Server> hk4 = new  ArrayList<Karte_Server>();
-            for(int i = 1; i<=12; i++){
-                int r = rnd.nextInt(Karten.size());
-                hk1.add(Karten.get(r));
-                Karten.remove(r);   
+            Stapelanzahl = 12;
+            Stapel = new Stapel_Server[Stapelanzahl];
+            for(int i=0; i<Spieleranzahl; i++){
+                ArrayList<Karte_Server> hk = new  ArrayList<Karte_Server>();
+                for(int t = 1; t<=12; t++){
+                    int r = rnd.nextInt(Karten.size());
+                    hk.add(Karten.get(r));
+                    Karten.remove(r);   
+                }
+                spieler[i]=new Spieler("Spieler"+(i+1), i+1, hk);
             }
-            for(int i = 1; i<=12; i++){
-                int r = rnd.nextInt(Karten.size());
-                hk2.add(Karten.get(r));
-                Karten.remove(r);   
+            for(int y=0; y<KIAnzahl; y++){
+                ArrayList<Karte_Server> hk = new ArrayList<Karte_Server>();
+                for(int t = 0; t<=12; t++){
+                    int r = rnd.nextInt(Karten.size());
+                    hk.add(Karten.get(r));
+                    Karten.remove(r);
+                }
+                ki[y]=new KI(kiStufe.get(y));
             }
-            for(int i = 1; i<=12; i++){
+            for(int x=0; x<Stapelanzahl; x++){
                 int r = rnd.nextInt(Karten.size());
-                hk3.add(Karten.get(r));
-                Karten.remove(r);   
+                Stapel[x] = new Stapel_Server(Karten.get(r), x); 
             }
-            for(int i = 1; i<=12; i++){
-                int r = rnd.nextInt(Karten.size());
-                hk4.add(Karten.get(r));
-                Karten.remove(r);   
-            }
-            Spieler Spieler1 = new Spieler("Spieler1", 1, hk1);
-            Spieler Spieler2 = new Spieler("Spieler2", 2, hk2);
-            Spieler Spieler3 = new Spieler("Spieler3", 3, hk3);
-            Spieler Spieler4 = new Spieler("Spieler4", 4, hk4);
         }
+
         Server.starteServer(Spieleranzahl);
+    }
+    Karte_Server[] ausgspka = new Karte_Server[Spieleranzahl];
+    int[] ausgspid = new int[Spieleranzahl];
+    Karte_Server[] ausgkika = new Karte_Server[KIAnzahl];
+    int[] ausgkiid = new int[KIAnzahl];
+    int l = 0;
+    public void ausgewählt(Karte_Server k, int i){
+        ausgspka[l] = k;
+        ausgspid[l] = i;
+        l++;
+        if(l>=Spieleranzahl){
+            for(int u = 0; u<=KIAnzahl; u++){
+                //ausgkika[u]=ki[u].neueRunde(Stapel, ki[u].hk);
+                ausgkiid[u]=u;
+            }
+            l=0;
+        }
     }
 
 }
+
