@@ -23,20 +23,20 @@ public class Server{
 
     public static void starteServer(int n1){
         n=n1;
-        for(int i=0; i<n; i++){
+        /*for(int i=0; i<n; i++){
             Client c=new Client();
             c.start();
-        }
+        }*/
         verbindungen=new SocketHandler_Server[n];
         System.out.println("Server wird unter der IP "+getLocalIP().toString().substring(1)+" aufgebaut.");
         try{
-            server=new ServerSocket(port);
+            server=new ServerSocket(port, 10, getLocalIP());
             for(int i=0; i<n; i++){
                 verbindungen[i]=new SocketHandler_Server(server.accept(), i);
                 System.out.println("Client angenommen!");
                 
                 for(int t=0; t<=i; t++){
-                    verbindungen[t].senden("warten"+i+","+n+"\n");
+                    verbindungen[t].senden("warten"+(i+1)+","+n+"\n");
                 }
 
                 //verbindungen[i].senden("warten3,4\n");
@@ -46,11 +46,6 @@ public class Server{
                 //verbindungen[i].senden("sortieren1,11,1;2,7,3;3,99,8;4,65,2\n");
                 //verbindungen[i].senden("new2,7,3;4,2,1;98,10,5:1,6,19,87\n");
             }
-
-            try{
-                Thread.sleep(10000);
-            }catch(Exception e){}
-            System.exit(0);
         }catch(Exception e){System.out.println(e.getMessage());}
     }
 
@@ -60,9 +55,9 @@ public class Server{
         Server_Start.ausgewählt(zahl, id);
     }
     
-    public static void setup(int nSpieler, int nStapel, int nHandkarten){
+    public static void setup(int nSpieler, int nStapel){
         for(int i=0; i<n; i++){
-            verbindungen[i].senden("setup"+nSpieler+","+nStapel+","+nHandkarten+"\n");
+            verbindungen[i].senden("setup"+nSpieler+","+nStapel+","+i+"\n");
         }
     }
     
@@ -86,19 +81,19 @@ public class Server{
         }
     }
     
-    public static void neueRunde(ArrayList<Stapel_Server> st, ArrayList<Karte_Server>[] hk){
+    public static void neueRunde(ArrayList<Stapel_Server> st, ArrayList<ArrayList<Karte_Server>> hk){
         String s="new";
         for(int i=0; i<st.size(); i++){
             Stapel_Server sta=st.get(i);
-            s+=sta.getOberste()+","+sta.getPunkte()+","+sta.getAnzahl();
+            s+=sta.getOberste().getZahl()+","+sta.getPunkte()+","+sta.getAnzahl();
             if(i!=st.size()-1) s+=";";
         }
         s+=":";
         for(int i=0; i<n; i++){
             String str=s;
-            for(int t=0; t<hk[i].size(); t++){
-                str+=hk[i].get(t).getZahl();
-                if(t!=hk[i].size()-1) str+=",";
+            for(int t=0; t<hk.get(i).size(); t++){
+                str+=hk.get(i).get(t).getZahl();
+                if(t!=hk.get(i).size()-1) str+=",";
             }
             str+="\n";
             verbindungen[i].senden(str);
