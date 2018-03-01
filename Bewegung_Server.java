@@ -5,8 +5,8 @@ public class Bewegung_Server{
     private int karte;
     private int stapel;
     
-    public Bewegung_Server(Spieler s, Karte_Server k, Stapel_Server st){
-        spieler=s.getID();
+    public Bewegung_Server(int s, Karte_Server k, Stapel_Server st){
+        spieler=s;
         karte=k.getZahl();
         stapel=st.getID();
     }
