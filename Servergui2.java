@@ -74,7 +74,6 @@ public class Servergui2 extends Frame {
         choice4.add("KI(Leicht)");
         choice4.add("KI(Mittel)");
         choice4.add("KI(Schwer)");
-        choice4.add("");
         cp.add(choice4);
         button1.setBounds(136, 296, 225, 41);
         button1.setLabel("Starten");
