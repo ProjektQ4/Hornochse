@@ -37,7 +37,7 @@ public class Stapel_Server{
     }
     
     public Karte_Server getOberste(){
-        return karten.get(0);
+        return karten.get(getAnzahl()-1);
     }
     
     public int getAnzahl(){
