@@ -192,16 +192,23 @@ public class Grafik{
                     int x=(525-(a*breite+(a-1)*10)/2)+i*(breite+10);
                     Karte_Client k=stapel[i].getOberste();
                     g.drawImage(k.getImage(), x, y, null);
+                    g.drawString("n: "+stapel[i].getAnzahl(), x+breite/2-7, y-3);
+                    g.drawString("p: "+stapel[i].getPunkte(), x+breite/2-7, y+höhe+10);
                 }
                 for(int i=0; i<b; i++){
                     int y=382+15;
                     int x=(525-(b*breite+(b-1)*10)/2)+i*(breite+10);
                     Karte_Client k=stapel[i+a].getOberste();
                     g.drawImage(k.getImage(), x, y, null);
+                    g.drawString("n: "+stapel[i+a].getAnzahl(), x+breite/2-7, y-2);
+                    g.drawString("p: "+stapel[i+a].getPunkte(), x+breite/2-7, y+höhe+10);
                 }
 
                 //gelegte Karten//
-
+                
+                if(eigeneGelegt){
+                    g.drawImage(rückseite, 525-breite/2, 764-2*höhe-20, null);
+                }
                 if(n==2){
                     if(gelegt[0]) g.drawImage(rückseite, 525-breite/2, höhe+20, null);
                 }
