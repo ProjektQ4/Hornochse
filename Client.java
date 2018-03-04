@@ -87,14 +87,14 @@ public class Client extends Thread{
             String s2=s.substring(s.indexOf(":")+1);
             while(s1.indexOf(";")!=-1){
                 int n1=Integer.valueOf(s1.substring(0, s1.indexOf(",")));
-                s1=s1.substring(s.indexOf(",")+1);
+                s1=s1.substring(s1.indexOf(",")+1);
                 int n2=Integer.valueOf(s1.substring(0, s1.indexOf(",")));
                 int n3=Integer.valueOf(s1.substring(s1.indexOf(",")+1, s1.indexOf(";")));
                 s1=s1.substring(s1.indexOf(";")+1);
                 stapel.add(new Stapel_Client(n3, new Karte_Client(n1), n2));
             }
             int n1=Integer.valueOf(s1.substring(0, s1.indexOf(",")));
-            s1=s1.substring(s.indexOf(",")+1);
+            s1=s1.substring(s1.indexOf(",")+1);
             int n2=Integer.valueOf(s1.substring(0, s1.indexOf(",")));
             int n3=Integer.valueOf(s1.substring(s1.indexOf(",")+1));
             stapel.add(new Stapel_Client(n3, new Karte_Client(n1), n2));
