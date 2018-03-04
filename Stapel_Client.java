@@ -26,4 +26,12 @@ public class Stapel_Client{
     public Karte_Client getOberste(){
         return oberste;
     }
+    
+    public int getAnzahl(){
+        return n;
+    }
+    
+    public int getPunkte(){
+        return punkte;
+    }
 }
