@@ -5,12 +5,17 @@ public class Server_Start{
     private static int Spieleranzahl;
     private static int KIStufe;
     private static int KIAnzahl;
+    private static int AnzahlGesamt;
     private static int HandkartenProSpieler;
     private static int AnzahlStapel;
     private static ArrayList<ArrayList<Karte_Server>> KIHandkarten=new ArrayList<ArrayList<Karte_Server>>();
     private static ArrayList<Stapel_Server> stapel=new ArrayList<Stapel_Server>();
     private static Spieler[] spieler;
     private static KI[] ki;
+    private static int[] KIPunkte;
+
+    private static int zähler=0;
+    private static int[] ausgewählt;
 
     public static ArrayList<Karte_Server> KartenGenerieren(){
         ArrayList<Karte_Server> Karten = new  ArrayList<Karte_Server>();
@@ -142,7 +147,10 @@ public class Server_Start{
     public static void starten(int Sa, ArrayList<Integer> kiStufe){
         Spieleranzahl = Sa;
         KIAnzahl = kiStufe.size();
+        AnzahlGesamt=Spieleranzahl+KIAnzahl;
         Random rnd = new Random();
+
+        ausgewählt=new int[AnzahlGesamt];
 
         System.out.println(Sa+" Spieler mit "+ KIAnzahl+" KIs");
 
@@ -161,10 +169,10 @@ public class Server_Start{
             AnzahlStapel = 12;
         }
 
-            
         spieler=new Spieler[Spieleranzahl];
         ki=new KI[KIAnzahl];
-        
+        KIPunkte=new int[KIAnzahl];
+
         for(int i=0; i<AnzahlStapel; i++){
             int r=rnd.nextInt(Karten.size());
             stapel.add(new Stapel_Server(Karten.get(r), i));
@@ -191,16 +199,139 @@ public class Server_Start{
         }
         Server.starteServer(Spieleranzahl);
         Server.setup(Spieleranzahl+KIAnzahl, AnzahlStapel);
-        
+
         ArrayList<ArrayList<Karte_Server>> hk=new ArrayList<ArrayList<Karte_Server>>();
         for(int i=0; i<Spieleranzahl; i++){
             hk.add(spieler[i].getHandkarten());
         }
-        
+
         Server.neueRunde(stapel, hk);
     }
 
     public static void ausgewählt(int a, int b){
-        int i=0;
+        zähler++;
+        ausgewählt[b]=a;
+        Karte_Server k=spieler[b].getKarte(a);
+        Server.legen(k, b);
+        if(zähler==Spieleranzahl){
+            zähler=0;
+            for(int i=0; i<KIAnzahl; i++){
+                ausgewählt[Spieleranzahl+i]=ki[i].neueRunde(stapel, KIHandkarten.get(i)).getZahl();
+
+                Karte_Server KIkarte=null;
+                for(int t=0; t<KIHandkarten.get(i).size(); t++){
+                    if(KIHandkarten.get(i).get(t).getZahl()==ausgewählt[Spieleranzahl+i]){
+                        KIkarte=KIHandkarten.get(i).get(t);
+                        break;
+                    }
+                }
+                Server.legen(KIkarte, Spieleranzahl+i);
+            }
+
+            int[] karten=new int[AnzahlGesamt];
+            ArrayList<Integer> f=new ArrayList<Integer>();
+            for(int i=0; i<AnzahlGesamt; i++){
+                f.add(ausgewählt[i]);
+            }
+            int z=0;
+            while(f.size()>0){
+                int min=f.get(0);
+                for(int t=0; t<f.size(); t++){
+                    min=Math.min(min, f.get(t));
+                }
+                karten[z]=min;
+                f.remove(new Integer(min));
+                z++;
+            }
+
+            ArrayList<Stapel_Server> sp=new ArrayList<Stapel_Server>();
+            ArrayList<Stapel_Server> stap=new ArrayList<Stapel_Server>();
+            for(int i=0; i<stapel.size(); i++){
+                stap.add(stapel.get(i));
+            }
+
+            while(stap.size()>0){
+                Stapel_Server s=stap.get(0);
+                for(int t=0; t<stap.size(); t++){
+                    int c=s.getOberste().getZahl();
+                    int d=stap.get(t).getOberste().getZahl();
+                    if(c>d){
+                        s=stap.get(t);
+                    }
+                }
+                sp.add(s);
+                stap.remove(s);
+            }
+
+            for(int i=0; i<AnzahlGesamt; i++){
+                int e=karten[i];
+                k=null;
+                int g=0;
+                for(int t=0; t<Spieleranzahl; t++){
+                    if(e==ausgewählt[t]){
+                        k=spieler[t].getKarte(e);
+                        g=i;
+                    }
+                }
+                for(int t=Spieleranzahl; t<AnzahlGesamt; t++){
+                    if(e==ausgewählt[t]){
+                        for(int o=0; o<KIHandkarten.get(t-Spieleranzahl).size(); o++){
+                            if(e==KIHandkarten.get(t-Spieleranzahl).get(o).getZahl()){
+                                k=KIHandkarten.get(t-Spieleranzahl).get(o);
+                                g=t;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if(e<sp.get(0).getOberste().getZahl()){
+                    ArrayList<Karte_Server> h=sp.get(0).anlegen(k);
+                    if(h!=null){
+                        for(int t=0; t<h.size(); t++){
+                            if(g<Spieleranzahl){
+                                spieler[g].addPunkte(h.get(t).getPunkte());
+                            }
+                            else{
+                                KIPunkte[g-Spieleranzahl]+=h.get(t).getPunkte();
+                            }
+                        }
+                    }
+                }
+                else{
+                    boolean bool=true;
+                    z=0;
+                    while(bool){
+                        if(sp.get(z).getOberste().getZahl()<e&&z<sp.size()) z++;
+                        else bool=false;
+                    }
+                    if(sp.get(z).getOberste().getZahl()>e) z--;
+                    ArrayList<Karte_Server> h=sp.get(z).anlegen(k);
+                    if(h!=null){
+                        for(int t=0; t<h.size(); t++){
+                            if(g<Spieleranzahl){
+                                spieler[g].addPunkte(h.get(t).getPunkte());
+                            }
+                            else{
+                                KIPunkte[g-Spieleranzahl]+=h.get(t).getPunkte();
+                            }
+                        }
+                    }
+                }
+
+                if(g<Spieleranzahl){
+                    spieler[g].entferneKarte(k);
+                }
+                else{
+                    KIHandkarten.get(g-Spieleranzahl).remove(k);
+                }
+            }
+
+            ArrayList<ArrayList<Karte_Server>> hk=new ArrayList<ArrayList<Karte_Server>>();
+            for(int i=0; i<Spieleranzahl; i++){
+                hk.add(spieler[i].getHandkarten());
+            }
+
+            Server.neueRunde(stapel, hk);
+        }
     }
 }
